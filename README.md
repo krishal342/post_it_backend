@@ -33,4 +33,4 @@
 
 # links
 
-link of frontend code - 
+link of frontend code - https://github.com/krishal342/post_it_frontend
