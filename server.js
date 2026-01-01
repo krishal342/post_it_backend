@@ -1,7 +1,7 @@
 import express from 'express';
 
 
-import { PORT,FRONTEND_URL } from './config/config.js';
+import { PORT, FRONTEND_URL } from './config/config.js';
 
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -20,7 +20,7 @@ import homeRouter from './routes/home.router.js';
 const app = express();
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
     origin: FRONTEND_URL,
@@ -29,22 +29,22 @@ app.use(cors({
 
 
 // API routes
-app.use('/', homeRouter);
 app.use('/auth', authRouter);
+app.use('/home', homeRouter);
 app.use('/users', authMiddleware, userRouter);
-app.use('/posts', authMiddleware,postRouter);
+app.use('/posts', authMiddleware, postRouter);
 
 // Error Middleware
 app.use(errorMiddleware);
 
 
-app.listen( PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server running of port ${PORT}`)
 });
 
 
 //Handle unhandled promise rejections (e.g. database connection errors)
-process.on("unhandledRejection",  (err) => {
+process.on("unhandledRejection", (err) => {
     console.error(`Unhandled Rejection: ${err.message}`);
     Server.close(async () => {
         await disconnectDB();

@@ -60,7 +60,11 @@ export const login = async(req, res,next) => {
 
         const token = generateToken(user);
 
-        return res.cookie('loginToken',token).status(200).json({
+        return res.cookie('loginToken',token,{
+            httpOnly: true,
+            secure:true,
+            sameSite: 'none'
+        }).status(200).json({
             success: true,
             message: "User logged in successfully"
         });
